@@ -109,16 +109,16 @@ function createSlugs(
 
   const slugs: string[] = [];
 
-  // if (baseSlugWithWordsBefore.length === 1) {
-  //   slugs.push(...baseSlugWithWordsBefore);
-  //   return slugs;
-  // }
-
   if (wordsAfter.length > 0) {
     slugs.push([
       baseSlugProjectName.join(''),
       wordsAfter.join('')
     ].join('-'));
+  }
+
+  if (baseSlugProjectName.length === 1) {
+    slugs.push(...baseSlugWithWordsBefore);
+    return slugs;
   }
 
   (wordsBefore.length > 0) && slugs.push(...withJoiners(baseSlugWithWordsBefore, joiners));
@@ -162,6 +162,13 @@ pack.addFormula({
   items: { type: coda.ValueType.String },
 
   examples: [
+    {
+      params: ['WordPress', 'username', undefined, ['pack']],
+      result: [
+        'username/wordpress-pack',
+        'username/wordpress',
+      ]
+    },
     {
       params: ['Google Photos', 'username', ['pack'], ['pack']],
       result: [

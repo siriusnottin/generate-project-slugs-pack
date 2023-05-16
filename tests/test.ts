@@ -32,6 +32,19 @@ const examples = [
       'username/googlephotos',
     ]
   },
+  {
+    params: ['WordPress', 'username', undefined, ['pack']],
+    result: [
+      'username/wordpress-pack',
+      'username/wordpress',
+    ]
+  },
+  {
+    params: ['WordPress', 'username'],
+    result: [
+      'username/wordpress',
+    ]
+  },
 ]
 
 describe('GenerateProjectSlugs Formula', () => {
@@ -49,5 +62,15 @@ describe('GenerateProjectSlugs Formula', () => {
     const result =
       await executeFormulaFromPackDef(pack, 'GenerateProjectSlugs', ['Google Photos', 'username', undefined, ['pack']]);
     assert.deepEqual(result, examples[2].result);
+  });
+  it('executes the formula with projectName as a single word', async () => {
+    const result =
+      await executeFormulaFromPackDef(pack, 'GenerateProjectSlugs', ['WordPress', 'username', undefined, ['pack']]);
+    assert.deepEqual(result, examples[3].result);
+  });
+  it('executes the formula with projectName as a single word, with repoOwner', async () => {
+    const result =
+      await executeFormulaFromPackDef(pack, 'GenerateProjectSlugs', ['WordPress', 'username']);
+    assert.deepEqual(result, examples[4].result);
   });
 });
